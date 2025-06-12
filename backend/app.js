@@ -45,19 +45,28 @@ app.get('/posts', async (req, res) => {
       ORDER BY p.id ASC`)
     res.json(result.rows);
     
-    const postId = result.rows[0][0]
-    const userName = result.rows[0][1]
-    const postTitle = result.rows[0][2]
-    const postLikes = result.rows[0][3]
-    const postViews = result.rows[0][4]
-    const postCreated_at = result.rows[0][5]
+    for (let i = 0; i < 10; i++) {
+      console.log(result.rows[i][0]);
+      console.log(result.rows[i][1]);
+      console.log(result.rows[i][2]);
+      console.log(result.rows[i][3]);
+      console.log(result.rows[i][4]);
+      console.log(result.rows[i][5]);
+    }
 
-    console.log(postId);
-    console.log(userName);
-    console.log(postTitle);
-    console.log(postLikes);
-    console.log(postViews);
-    console.log(postCreated_at);
+    // const postId = result.rows[0][0]
+    // const userName = result.rows[0][1]
+    // const postTitle = result.rows[0][2]
+    // const postLikes = result.rows[0][3]
+    // const postViews = result.rows[0][4]
+    // const postCreated_at = result.rows[0][5]
+
+    // console.log(postId);
+    // console.log(userName);
+    // console.log(postTitle);
+    // console.log(postLikes);
+    // console.log(postViews);
+    // console.log(postCreated_at);
     
 
     // console.log("쿼리 결과:", result.rows[0][1]);
@@ -92,6 +101,32 @@ app.listen(PORT, () => {
   console.log(`서버 실행 중: http://localhost:${PORT}`);
 });
 
-app.get('/', (req, res) => {
-  res.send('백엔드 서버가 잘 작동 중입니다!');
+
+
+app.get('/', async (req, res) => {
+    let connection;
+
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+    const result = await connection.execute(
+      `SELECT p.id, u.name, p.title, p.likes, p.views, p.created_at
+      FROM users u JOIN posts p ON u.id = p.user_id
+      ORDER BY p.id ASC`)
+      const limit = Math.min(10, result.rows.length);
+      for (let i = 0; i < limit; i++) {
+      console.log(result.rows[i][0]);
+      console.log(result.rows[i][1]);
+      console.log(result.rows[i][2]);
+      console.log(result.rows[i][3]);
+      console.log(result.rows[i][4]);
+      console.log(result.rows[i][5]);
+    }
+    res.json(result.rows);
+    
+  } catch (err) {
+    console.error("DB 연결 또는 쿼리 에러:", err);
+    res.status(500).json({ error: 'DB 오류', message: err.message });
+  } finally {
+    if (connection) await connection.close();
+  }
 });
