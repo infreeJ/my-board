@@ -1,44 +1,4 @@
 body{
   margin: 0;
   padding: 0;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-}
-
-.loginTab{
-  width: 400px;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  background-color: antiquewhite;
-  justify-content: space-evenly;
-  align-items: center;
-  margin: 0 auto;
-  margin-top: 100px;
-}
-
-.idInput, .pwInput{
-  width: 300px;
-  height: 35px;
-  border: 1px solid rgb(212, 212, 212);
-  border-radius: 6px;
-  outline: none;
-  padding-left: 10px;
-}
-
-.loginBtn, .joinBtn{
-  width: 100px;
-  height: 35px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.5s ease;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #5d5c5c;
-}
-
-.loginBtn:hover, .joinBtn:hover{
-background-color: rgb(189, 126, 44);
 }

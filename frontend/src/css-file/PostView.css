@@ -1,0 +1,36 @@
+.postView-wrapper{
+  max-width: 900px;
+  margin: 50px auto;
+  background-color: beige;
+  padding: 20px;
+}
+
+h1{
+  padding-left: 20px;
+}
+
+.postInfo{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.postInfo-name{
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.postInfo-view{
+  display: flex;
+  gap: 40px;
+  padding-right: 30px;
+}
+
+.postInfo-view > * {
+  font-size: 0.9rem;
+  background-color: rgb(216, 216, 216);
+  padding: 2px 5px;
+  border-radius: 8px;
+}

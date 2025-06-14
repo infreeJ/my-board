@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import '../css-file/PostPage.css'
 
 function PostPage() {
 
+  const nav = useNavigate();
 
   const [posts, setPosts] = useState<PostData[]>([]);
   const [page, setPage] = useState(1);
@@ -43,7 +46,6 @@ function PostPage() {
     }
   }
 
-
   return (
     <>
       <div className='postPage-wrapper'>
@@ -62,7 +64,7 @@ function PostPage() {
           <tbody>
             {posts.map((post) => {
               return (
-                <tr key={post.id}>
+                <tr key={post.id} onClick={() => { nav(`/post/${post.id}`)}}>
                   <td>{post.id}</td>
                   <td>{post.name}</td>
                   <td style={{ textAlign: "left" }}>{post.title}</td>

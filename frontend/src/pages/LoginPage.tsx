@@ -1,3 +1,5 @@
+import '../css-file/LoginPage.css'
+
 
 function LoginPage () {
   return(
