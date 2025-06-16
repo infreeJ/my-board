@@ -1,7 +1,26 @@
+import { useState } from 'react';
 import '../css-file/PostView.css'
 
 
 function PostView() {
+
+
+
+
+
+  const [id, setId] = useState();
+
+  fetch(`http://localhost:5000/post/${id}`)
+  .then((req) => {
+    return req.json();
+  })
+  .then((data) => {
+    console.log(data);
+  })
+
+
+
+
   return (
     <>
       <div className='postView-wrapper'>

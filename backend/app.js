@@ -19,7 +19,7 @@ const dbConfig = {
 
 
 
-app.get('/post/:page', async (req, res) => {
+app.get('/post/page/:page', async (req, res) => {
     let connection;
 
   try {

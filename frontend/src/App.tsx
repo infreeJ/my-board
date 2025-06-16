@@ -15,7 +15,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path='/login' element={<LoginPage/>}/>
-      <Route path='/post' element={<PostPage/>}/>
+      <Route path='/post/page/:page' element={<PostPage/>}/>
       <Route path='/post/1' element={<PostView/>}/>
     </Routes>
     </>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import '../css-file/PostPage.css'
 
@@ -11,7 +11,7 @@ function PostPage() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/post/${page}`)
+    fetch(`http://localhost:5000/post/page/${page}`)
       .then((req) => {
         return req.json();
       })
@@ -82,9 +82,9 @@ function PostPage() {
           </tbody>
         </table>
         <div>
-          <button onClick={() => {pageDown()}}>왼쪽</button>
+          <button onClick={() => {pageDown(), nav(`/post/page/${page}`)}}>왼쪽</button>
           <span>{page}/3</span>
-          <button onClick={() => {pageUp()}}>오른쪽</button>
+          <button onClick={() => {pageUp(), nav(`/post/page/${page}`)}}>오른쪽</button>
         </div>
       </div>
     </>
