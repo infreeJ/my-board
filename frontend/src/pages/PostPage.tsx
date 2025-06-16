@@ -7,23 +7,27 @@ function PostPage() {
 
   const nav = useNavigate();
 
-  const [posts, setPosts] = useState<PostData[]>([]);
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    fetch(`http://localhost:5000/post/page/${page}`)
-      .then((req) => {
-        return req.json();
-      })
-      .then((data) => {
-        setPosts(data);
-      })
-      .catch((err) => {
-        console.error("데이터 받아오기 실패:", err)
-      })
-  }, [page])
+  const { page } = useParams(); // URL로 페이지 값 받기
+  let pageNum = Number(page); // type 지정하고 pageNum에 선언
 
 
+  // 페이지 업/다운 함수
+  function pageDown() {
+    if (pageNum > 1) {
+      pageNum = pageNum - 1
+    }
+    return pageNum
+  }
+
+  function pageUp() {
+    if (pageNum < 3) {
+      pageNum = pageNum + 1
+    }
+    return pageNum
+  }
+
+
+  // 받을 데이터의 타입 명시
   type PostData = {
     id: number;
     name: string;
@@ -33,18 +37,24 @@ function PostPage() {
     created_at: string;
   };
 
+  // 데이터를 받을 빈 배열 만들기
+  const [posts, setPosts] = useState<PostData[]>([]);
 
-  function pageDown () {
-    if (page > 1) {
-      setPage(page-1)
-    }
-  }
 
-    function pageUp () {
-    if (page < 3) {
-      setPage(page+1)
-    }
-  }
+  // 페이지가 넘어가면 해당 페이지의 데이터 요청
+  useEffect(() => {
+    fetch(`http://localhost:5000/post/page/${pageNum}`)
+      .then((req) => {
+        return req.json();
+      })
+      .then((data) => {
+        setPosts(data);
+      })
+      .catch((err) => {
+        console.error("데이터 받아오기 실패:", err)
+      })
+  }, [pageNum])
+
 
   return (
     <>
@@ -64,7 +74,7 @@ function PostPage() {
           <tbody>
             {posts.map((post) => {
               return (
-                <tr key={post.id} onClick={() => { nav(`/post/${post.id}`)}}>
+                <tr key={post.id} onClick={() => { nav(`/post/${post.id}`) }}>
                   <td>{post.id}</td>
                   <td>{post.name}</td>
                   <td style={{ textAlign: "left" }}>{post.title}</td>
@@ -82,9 +92,9 @@ function PostPage() {
           </tbody>
         </table>
         <div>
-          <button onClick={() => {pageDown(), nav(`/post/page/${page}`)}}>왼쪽</button>
-          <span>{page}/3</span>
-          <button onClick={() => {pageUp(), nav(`/post/page/${page}`)}}>오른쪽</button>
+          <button onClick={() => { nav(`/post/page/${pageDown()}`) }}>왼쪽</button>
+          <span>{pageNum}/3</span>
+          <button onClick={() => { nav(`/post/page/${pageUp()}`) }}>오른쪽</button>
         </div>
       </div>
     </>

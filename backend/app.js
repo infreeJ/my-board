@@ -19,7 +19,7 @@ const dbConfig = {
 
 
 
-app.get('/post/page/:page', async (req, res) => {
+app.get('/post/page/:pageNum', async (req, res) => {
     let connection;
 
   try {
@@ -29,7 +29,7 @@ app.get('/post/page/:page', async (req, res) => {
       FROM users u JOIN posts p ON u.id = p.user_id
       ORDER BY p.id ASC`)
 
-      const pageNum = Number(req.params.page)
+      const pageNum = Number(req.params.pageNum)
 
       const tenPost = result.rows.slice(pageNum*10-10, pageNum*10)
 
