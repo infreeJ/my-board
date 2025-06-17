@@ -1,7 +1,7 @@
 .postView-wrapper{
   max-width: 900px;
   margin: 50px auto;
-  background-color: beige;
+  background-color: rgb(155, 175, 221);
   padding: 20px;
 }
 
@@ -33,4 +33,12 @@ h1{
   background-color: rgb(216, 216, 216);
   padding: 2px 5px;
   border-radius: 8px;
+}
+
+.postDetails{
+  padding-left: 20px;
+}
+
+.postComment{
+  padding-left: 20px;
 }

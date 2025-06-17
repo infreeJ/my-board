@@ -8,16 +8,15 @@ import './App.css'
 
 function App() {
 
-  
 
   return (
     <>
-    <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />
-      <Route path='/login' element={<LoginPage/>}/>
-      <Route path='/post/page/:page' element={<PostPage/>}/>
-      <Route path='/post/:id' element={<PostView/>}/>
-    </Routes>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/post/page/:page' element={<PostPage />} />
+        <Route path='/post/:id' element={<PostView />} />
+      </Routes>
     </>
   )
 }
