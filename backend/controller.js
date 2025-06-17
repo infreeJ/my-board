@@ -2,7 +2,6 @@ const oracledb = require("oracledb");
 
 oracledb.initOracleClient({ libDir: "C:\\oracle\\instantclient_21_18" });
 
-
 const dbConfig = {
   user: 'MYBOARD',
   password: 'myboard0507',
@@ -45,5 +44,38 @@ const getPostsByPage = async (req, res) => {
 };
 
 
-// 이건 바꿔도 되는건가?
-module.exports = { getPostsByPage };
+const getPost = async (req, res) => {
+  let connection;
+
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+
+    const postId = Number(req.params.postId)
+
+    const result = await connection.execute(
+      `SELECT p.id, p.title, u.name, p.views, p.likes, p.created_at, p.content
+      FROM users u JOIN posts p ON u.id = p.user_id
+      WHERE p.id = :postId`, [postId])
+
+      const postDetail = result.rows.map((row) => {
+        return {
+          id: row[0],
+          title: row[1],
+          name: row[2],
+          views: row[3],
+          likes: row[4],
+          created_at: row[5],
+          content: row[6],
+        }
+      })
+      res.json(postDetail);
+
+  } catch (err) {
+    console.error("DB 연결 또는 쿼리 에러:", err);
+    res.status(500).json({ error: 'DB 오류', message: err.message });
+  } finally {
+    if (connection) await connection.close();
+  }
+}
+
+module.exports = { getPostsByPage, getPost };

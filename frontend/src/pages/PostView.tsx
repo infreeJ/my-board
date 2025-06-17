@@ -1,22 +1,27 @@
 import { useState } from 'react';
 import '../css-file/PostView.css'
+import { useParams } from 'react-router-dom';
 
 
 function PostView() {
 
 
+  const { id } = useParams(); // Params 값 가져오기
 
+  const [postId, setPostId] = useState(id); // Params 값을 State로 지정
 
+  fetch(`http://localhost:5000/post/${postId}`)
+    .then((req) => {
+      return req.json();
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((err) => {
+      console.error("데이터 받아오기 실패:", err)
+    })
 
-  const [id, setId] = useState();
-
-  fetch(`http://localhost:5000/post/${id}`)
-  .then((req) => {
-    return req.json();
-  })
-  .then((data) => {
-    console.log(data);
-  })
+    
 
 
 
@@ -32,6 +37,7 @@ function PostView() {
           <div className='postInfo-view'>
             <span>조회수 5</span>
             <span>좋아요 1</span>
+            <span>작성일 2025.06.17</span>
           </div>
         </div>
 
