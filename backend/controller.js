@@ -78,4 +78,36 @@ const getPost = async (req, res) => {
   }
 }
 
-module.exports = { getPostsByPage, getPost };
+const getComments = async (req, res) => {
+  let connection;
+
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+
+    const postId = Number(req.params.postId)
+
+    const result = await connection.execute(
+      `SELECT c.id, u.name, c.content, c.created_at
+      FROM users u JOIN comments c ON u.id = c.user_id
+      JOIN posts p ON p.id = c.post_id
+      WHERE p.id = :postId`, [postId])
+
+    const commentDetail = result.rows.map((row) => {
+      return {
+        id: row[0],
+        name: row[1],
+        content: row[2],
+        created_at: row[3]
+      }
+    })
+    res.json(commentDetail);
+
+  } catch (err) {
+    console.error("DB 연결 또는 쿼리 에러:", err);
+    res.status(500).json({ error: 'DB 오류', message: err.message });
+  } finally {
+    if (connection) await connection.close();
+  }
+}
+
+module.exports = { getPostsByPage, getPost, getComments };

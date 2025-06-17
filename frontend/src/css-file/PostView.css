@@ -54,7 +54,7 @@ hr {
 }
 
 .postComment{
-  padding-left: 20px;
+  padding: 5px 20px;
   color: rgb(39, 39, 39);
   display: flex;
 }
