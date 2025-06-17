@@ -39,11 +39,9 @@ function PostView() {
       {postDetail.map((post) => {
         return (
           <div className='postView-wrapper' key={post.id}>
-
             <h1>{post.title}</h1>
-
             <div className='postInfo'>
-              <span className='postInfo-name'>{post.name}</span>
+              <span className='postInfo-name'>작성자 : {post.name}</span>
               <div className='postInfo-view'>
                 <span>조회수 {post.views}</span>
                 <span>좋아요 {post.likes}</span>
@@ -55,17 +53,15 @@ function PostView() {
                   })}</span>
               </div>
             </div>
-
             <hr />
-
             <div className='postDetails'>
               {post.content}
             </div>
-
             <hr />
-
             <div className='postComment'>
-              여긴 댓글이요
+              <span style={{width: "10%"}}>작성자</span>
+              <span style={{width: "70%"}}>댓글 내용</span>
+              <span style={{width: "20%"}}>작성일</span>
             </div>
           </div>
         )
