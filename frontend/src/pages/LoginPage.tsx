@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import '../css-file/LoginPage.css'
+import { useNavigate } from 'react-router-dom'
 
 
 function LoginPage() {
+
+  const nav = useNavigate();
 
   const [userId, setUserId] = useState("")
   const [password, setPassword] = useState("")
@@ -26,6 +29,7 @@ function LoginPage() {
 
       if (result.success) {
         alert("로그인 성공!")
+        nav(`/post/page/1`)
       } else {
         alert("로그인 실패!");
       }
