@@ -21,6 +21,7 @@ function LoginPage() {
 
       const result = await response.json();
       console.log("서버 응답:", result);
+      
 
 
       if (result.success) {
@@ -30,7 +31,6 @@ function LoginPage() {
       }
     } catch (err) {
       console.error("로그인 요청 중 에러:", err);
-
     }
   }
 
