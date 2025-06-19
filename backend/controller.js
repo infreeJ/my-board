@@ -78,6 +78,7 @@ const getPost = async (req, res) => {
   }
 }
 
+
 const getComments = async (req, res) => {
   let connection;
 

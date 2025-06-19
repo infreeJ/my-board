@@ -10,6 +10,13 @@
   margin-top: 100px;
 }
 
+form{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+
 .idInput, .pwInput{
   width: 300px;
   height: 35px;
@@ -33,4 +40,9 @@
 
 .loginBtn:hover, .joinBtn:hover{
 background-color: rgb(189, 126, 44);
+}
+
+.logo{
+  font-size: 1.5rem;
+  font-weight: 700;
 }
