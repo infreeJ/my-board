@@ -25,8 +25,6 @@ function LoginPage() {
       const result = await response.json();
       console.log("서버 응답:", result);
       
-
-
       if (result.success) {
         alert("로그인 성공!")
         nav(`/post/page/1`)
@@ -48,7 +46,7 @@ function LoginPage() {
           <input className="pwInput" type="password" placeholder="비밀번호를 입력하세요" value={password} onChange={(e) => setPassword(e.target.value)} />
           <button type="submit" className="loginBtn">로그인</button>
         </form>
-        <button className="joinBtn">회원가입</button>
+        <button className="joinBtn" onClick={() => {nav("/join")}}>회원가입</button>
       </div>
     </>
   )
