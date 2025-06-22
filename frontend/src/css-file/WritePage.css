@@ -1,0 +1,41 @@
+.write-wrapper{
+  width: 62vw;
+  height: 90vh;
+  background-color: #516983;
+  margin: 5vh auto;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  align-items: center;
+  align-self: flex-start;
+  gap: 20px;
+  box-shadow: 1px 1px 4px black;
+}
+
+.title-wrapper{
+  display: flex;
+  width: 100%;
+}
+
+.title-wrapper span{
+  font-size: 1.1rem;
+  width: 40px;
+}
+
+input{
+  width: 90%;
+  height: 35px;
+  padding-left: 10px;
+}
+
+textarea{
+  width: 90%;
+  height: 80%;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.btn{
+  width: 100px;
+}

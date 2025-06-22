@@ -7,6 +7,7 @@ import JoinPage from './pages/JoinPage';
 
 
 import './App.css'
+import WritePage from './pages/WritePage';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path='/join' element={<JoinPage/>} />
         <Route path='/post/page/:page' element={<PostPage userId={userId}/>} />
         <Route path='/post/:id' element={<PostView />} />
+        <Route path='/write' element={<WritePage />} />
       </Routes>
     </>
   )

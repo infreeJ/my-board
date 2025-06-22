@@ -68,12 +68,12 @@ function PostPage({ userId }: Props) {
         <div className='header-wrapper'>
           <div className='header-left'>
             
-            <button>글쓰기</button>
+            <button onClick={() => { nav('/write')}}>글쓰기</button>
           </div>
           <h1>게시판</h1>
           <div className='search-wrapper'>
             <input type="text" />
-            <button type="submit">검색</button>
+            <button type="submit" style={{width: "70px"}}>검색</button>
           </div>
         </div>
 
