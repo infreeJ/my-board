@@ -2,12 +2,16 @@ import { useState } from 'react'
 import '../css-file/LoginPage.css'
 import { useNavigate } from 'react-router-dom'
 
+interface Props {
+  userId: string,
+  setUserId: React.Dispatch<React.SetStateAction<string>>;
+}
 
-function LoginPage() {
+function LoginPage({userId, setUserId} : Props) {
 
   const nav = useNavigate();
 
-  const [userId, setUserId] = useState("")
+  // const [userId, setUserId] = useState("")
   const [password, setPassword] = useState("")
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -3,7 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import '../css-file/PostPage.css'
 
-function PostPage() {
+interface Props {
+  userId: string,
+}
+
+function PostPage({ userId }: Props) {
 
   const nav = useNavigate();
 
@@ -59,7 +63,20 @@ function PostPage() {
   return (
     <>
       <div className='postPage-wrapper'>
-        <h1>게시판</h1>
+        <p className='nickname'>반갑습니다! {userId}님</p>
+
+        <div className='header-wrapper'>
+          <div className='header-left'>
+            
+            <button>글쓰기</button>
+          </div>
+          <h1>게시판</h1>
+          <div className='search-wrapper'>
+            <input type="text" />
+            <button type="submit">검색</button>
+          </div>
+        </div>
+
         <table>
           <thead>
             <tr>

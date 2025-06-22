@@ -8,6 +8,13 @@
   border-radius: 12px;
 }
 
+.header-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 30px;
+}
+
 /* 제목 */
 .postPage-wrapper h1 {
   text-align: center;
@@ -69,4 +76,34 @@ button:hover {
 span {
   font-size: 14px;
   color: #333;
+}
+
+.header-left{
+  display: flex;
+  gap: 20px;
+}
+
+.nickname{
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.search-wrapper{
+  display: flex;
+  align-items: center;
+}
+
+.search-wrapper input{
+  width: 160px;
+  height: 30px;
+  outline: none;
+  border: 1px solid rgb(173, 173, 173);
+  border-right: none;
+  /* border-left: 1px solid black; */
+  border-radius: 6px 0 0 6px;
+}
+
+.search-wrapper button{
+  border-radius: 0 6px 6px 0;
+  height: 34px;
 }
