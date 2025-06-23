@@ -12,7 +12,7 @@ import WritePage from './pages/WritePage';
 function App() {
 
 
-  const [userName, setUserName ] = useState("");
+  const [ userName, setUserName ] = useState("");
   const [ userId, setUserId ] = useState(0);
 
 

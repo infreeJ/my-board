@@ -5,12 +5,12 @@ const writePost = async (req, res) => {
 
   try {
     connection = await oracledb.getConnection(dbConfig);
-    const { title, text } = req.body;
+    const { title, text, userId } = req.body;
 
     const result = await connection.execute(
-      `INSERT INTO POSTS
+      `INSERT INTO POSTS (id, title, content, likes, views, created_at, user_id)
       VALUES(posts_seq.NEXTVAL, :title, :text, 0, 0, SYSDATE, :userId)`,
-      [title, text, userId],
+      {title, text, userId},
       { autoCommit: true })
 
     if (result.rowsAffected == 1) {

@@ -5,9 +5,8 @@ const getLogin = async (req, res) => {
 
   try {
     connection = await oracledb.getConnection(dbConfig);
-
     const { userName, password } = req.body;
-
+    
     const result = await connection.execute(
       `SELECT name, id
       FROM users

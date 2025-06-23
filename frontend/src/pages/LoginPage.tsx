@@ -11,12 +11,10 @@ interface Props {
 function LoginPage({userName, setUserName, setUserId} : Props) {
 
   const nav = useNavigate();
-
   const [password, setPassword] = useState("")
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
@@ -29,7 +27,6 @@ function LoginPage({userName, setUserName, setUserId} : Props) {
       console.log("서버 응답:", result);
       setUserId(result.id);
       
-      
       if (result.success) {
         alert("로그인 성공!")
         
@@ -41,7 +38,6 @@ function LoginPage({userName, setUserName, setUserId} : Props) {
       console.error("로그인 요청 중 에러:", err);
     }
   }
-
 
   return (
     <>
