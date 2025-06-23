@@ -3,15 +3,15 @@ import '../css-file/LoginPage.css'
 import { useNavigate } from 'react-router-dom'
 
 interface Props {
-  userId: string,
-  setUserId: React.Dispatch<React.SetStateAction<string>>;
+  userName: string,
+  setUserName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function LoginPage({userId, setUserId} : Props) {
+function LoginPage({userName, setUserName} : Props) {
 
   const nav = useNavigate();
 
-  // const [userId, setUserId] = useState("")
+  // const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,7 +22,7 @@ function LoginPage({userId, setUserId} : Props) {
         method: "POST",
         headers: {
           "Content-Type": "application/json"},
-        body: JSON.stringify({ userId, password })
+        body: JSON.stringify({ userName, password })
       })
 
       const result = await response.json();
@@ -45,7 +45,7 @@ function LoginPage({userId, setUserId} : Props) {
       <div className="loginTab">
         <span className='logo'>게시판 이름 추천좀</span>
         <form onSubmit={handleSubmit}>
-          <input className="idInput" type="text" placeholder="아이디를 입력하세요." value={userId} onChange={(e) => setUserId(e.target.value)} />
+          <input className="idInput" type="text" placeholder="아이디를 입력하세요." value={userName} onChange={(e) => setUserName(e.target.value)} />
           <input className="pwInput" type="password" placeholder="비밀번호를 입력하세요" value={password} onChange={(e) => setPassword(e.target.value)} />
           <button type="submit" className="loginBtn">로그인</button>
         </form>

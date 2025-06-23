@@ -6,12 +6,12 @@ const getLogin = async (req, res) => {
   try {
     connection = await oracledb.getConnection(dbConfig);
 
-    const { userId, password } = req.body;
+    const { userName, password } = req.body;
 
     const result = await connection.execute(
       `SELECT name
       FROM users
-      WHERE name = :userId AND pw = :password`, [userId, password])
+      WHERE name = :userName AND pw = :password`, [userName, password])
 
     if (result.rows.length > 0) {
       res.json({ success: true, name: result.rows[0][0] });
@@ -33,12 +33,12 @@ const setJoin = async (req, res) => {
   try {
     connection = await oracledb.getConnection(dbConfig);
 
-    const {userId, userPw, userEmail} = req.body;
+    const {userName, userPw, userEmail} = req.body;
     
     const result = await connection.execute(
       `INSERT INTO users
-      VALUES (users_seq.NEXTVAL, :userId, :userPw, :userEmail)`,
-      [userId, userPw, userEmail],
+      VALUES (users_seq.NEXTVAL, :userName, :userPw, :userEmail)`,
+      [userName, userPw, userEmail],
     { autoCommit: true })
 
     if (result.rowsAffected == 1) {

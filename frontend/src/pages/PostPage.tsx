@@ -4,10 +4,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import '../css-file/PostPage.css'
 
 interface Props {
-  userId: string,
+  userName: string,
 }
 
-function PostPage({ userId }: Props) {
+function PostPage({ userName }: Props) {
 
   const nav = useNavigate();
 
@@ -63,7 +63,7 @@ function PostPage({ userId }: Props) {
   return (
     <>
       <div className='postPage-wrapper'>
-        <p className='nickname'>반갑습니다! {userId}님</p>
+        <p className='nickname'>반갑습니다! {userName}님</p>
 
         <div className='header-wrapper'>
           <div className='header-left'>

@@ -5,7 +5,7 @@ function JoinPage() {
   
   const nav = useNavigate();
 
-  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
   const [userPw, setUserPw] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
@@ -16,7 +16,7 @@ function JoinPage() {
       const response = await fetch("http://localhost:5000/join", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({userId, userPw, userEmail})
+          body: JSON.stringify({userName, userPw, userEmail})
         }
       )
       const result = await response.json();
@@ -38,7 +38,7 @@ function JoinPage() {
         <span className='logo'>회원가입</span>
         <form onSubmit={handleSubmit}>
           <input className="idInput" type="text" placeholder="아이디를 입력하세요."
-          value={userId} onChange={(e) => {setUserId(e.target.value)}}/>
+          value={userName} onChange={(e) => {setUserName(e.target.value)}}/>
           <input className="pwInput" type="password" placeholder="비밀번호를 입력하세요"
           value={userPw} onChange={(e) => {setUserPw(e.target.value)}}/>
           <input className="pwInput" type="email" placeholder="이메일을 입력하세요"

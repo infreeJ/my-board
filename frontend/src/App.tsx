@@ -12,16 +12,16 @@ import WritePage from './pages/WritePage';
 function App() {
 
 
-  const [userId, setUserId ] = useState("");
+  const [userName, setUserName ] = useState("");
 
 
   return (
     <>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
-        <Route path='/login' element={<LoginPage userId={userId} setUserId={setUserId} />} />
+        <Route path='/login' element={<LoginPage userName={userName} setUserName={setUserName} />} />
         <Route path='/join' element={<JoinPage/>} />
-        <Route path='/post/page/:page' element={<PostPage userId={userId}/>} />
+        <Route path='/post/page/:page' element={<PostPage userName={userName}/>} />
         <Route path='/post/:id' element={<PostView />} />
         <Route path='/write' element={<WritePage />} />
       </Routes>
