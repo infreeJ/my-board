@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom'
 interface Props {
   userName: string,
   setUserName: React.Dispatch<React.SetStateAction<string>>;
+  setUserId: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function LoginPage({userName, setUserName} : Props) {
+function LoginPage({userName, setUserName, setUserId} : Props) {
 
   const nav = useNavigate();
 
-  // const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,9 +27,12 @@ function LoginPage({userName, setUserName} : Props) {
 
       const result = await response.json();
       console.log("서버 응답:", result);
+      setUserId(result.id);
+      
       
       if (result.success) {
         alert("로그인 성공!")
+        
         nav(`/post/page/1`)
       } else {
         alert("로그인 실패!");

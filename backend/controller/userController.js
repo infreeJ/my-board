@@ -9,12 +9,12 @@ const getLogin = async (req, res) => {
     const { userName, password } = req.body;
 
     const result = await connection.execute(
-      `SELECT name
+      `SELECT name, id
       FROM users
       WHERE name = :userName AND pw = :password`, [userName, password])
 
     if (result.rows.length > 0) {
-      res.json({ success: true, name: result.rows[0][0] });
+      res.json({ success: true, name: result.rows[0][0], id: result.rows[0][1] });
     } else {
       res.json({ success: false });
     }

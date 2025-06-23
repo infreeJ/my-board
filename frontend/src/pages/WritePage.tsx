@@ -2,8 +2,12 @@ import { useState } from 'react'
 import '../css-file/WritePage.css'
 import { useNavigate } from 'react-router-dom';
 
+interface Props {
+  userId: number
+}
 
-function WritePage() {
+
+function WritePage(userId: Props) {
 
   const nav = useNavigate();
 
@@ -19,7 +23,7 @@ const [ text, setText ] = useState("");
         method: "POST",
         headers: {
           "Content-Type": "application/json"},
-        body: JSON.stringify({ title, text })
+        body: JSON.stringify({ title, text, userId })
       })
 
       const result = await response.json();
