@@ -13,6 +13,7 @@ const getPostsByPage = async (req, res) => {
     const pageNum = Number(req.params.pageNum)
 
     const tenPost = result.rows.slice(pageNum * 10 - 10, pageNum * 10)
+    const maxPost = result.rows.length
 
     const post = tenPost.map((row) => {
       return {
@@ -24,7 +25,7 @@ const getPostsByPage = async (req, res) => {
         created_at: row[5],
       }
     })
-    res.json(post);
+    res.json({post: post, maxPost: maxPost});
 
 
   } catch (err) {

@@ -24,7 +24,7 @@ function PostPage({ userName }: Props) {
   }
 
   function pageUp() {
-    if (pageNum < 3) {
+    if (pageNum < Math.ceil(maxPost/10)) {
       pageNum = pageNum + 1
     }
     return pageNum
@@ -43,6 +43,7 @@ function PostPage({ userName }: Props) {
 
   // 데이터를 받을 빈 배열 만들기
   const [posts, setPosts] = useState<PostData[]>([]);
+  const [maxPost, setMaxPost] = useState(0);
 
 
   // 페이지가 넘어가면 해당 페이지의 데이터 요청
@@ -52,7 +53,8 @@ function PostPage({ userName }: Props) {
         return req.json();
       })
       .then((data) => {
-        setPosts(data);
+        setPosts(data.post);
+        setMaxPost(data.maxPost);
       })
       .catch((err) => {
         console.error("데이터 받아오기 실패:", err)
@@ -110,7 +112,7 @@ function PostPage({ userName }: Props) {
         </table>
         <div>
           <button onClick={() => { nav(`/post/page/${pageDown()}`) }}>왼쪽</button>
-          <span>{pageNum}/3</span>
+          <span>{pageNum}/{Math.ceil(maxPost/10)}</span>
           <button onClick={() => { nav(`/post/page/${pageUp()}`) }}>오른쪽</button>
         </div>
       </div>
