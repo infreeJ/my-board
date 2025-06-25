@@ -45,17 +45,32 @@ function PostView() {
     created_at: string
   };
 
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/post/${postId}/comments`)
+  //     .then((req) => {
+  //       return req.json();
+  //     })
+  //     .then((data) => {
+  //       setCommentDetail(data);
+  //     })
+  //     .catch((err) => {
+  //       console.error("데이터 받아오기 실패:", err)
+  //     })
+  // }, [postId])
+
+
+  // try로 바꾸기
   useEffect(() => {
-    fetch(`http://localhost:5000/post/${postId}/comments`)
-      .then((req) => {
-        return req.json();
-      })
-      .then((data) => {
+    async function fetchData() {
+      try {
+        const response = await fetch(`http://localhost:5000/post/${postId}/comments`)
+        const data = await response.json();
         setCommentDetail(data);
-      })
-      .catch((err) => {
-        console.error("데이터 받아오기 실패:", err)
-      })
+      } catch(err) {
+        console.error(err);
+      }
+    }
+    fetchData();
   }, [postId])
 
 

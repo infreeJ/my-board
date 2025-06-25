@@ -24,7 +24,7 @@ function PostPage({ userName }: Props) {
   }
 
   function pageUp() {
-    if (pageNum < Math.ceil(maxPost/10)) {
+    if (pageNum < Math.ceil(maxPost / 10)) {
       pageNum = pageNum + 1
     }
     return pageNum
@@ -47,18 +47,34 @@ function PostPage({ userName }: Props) {
 
 
   // 페이지가 넘어가면 해당 페이지의 데이터 요청
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/post/page/${pageNum}`)
+  //     .then((req) => {
+  //       return req.json();
+  //     })
+  //     .then((data) => {
+  //       setPosts(data.post);
+  //       setMaxPost(data.maxPost);
+  //     })
+  //     .catch((err) => {
+  //       console.error("데이터 받아오기 실패:", err)
+  //     })
+  // }, [pageNum])
+
+
+  // try로 바꾸기
   useEffect(() => {
-    fetch(`http://localhost:5000/post/page/${pageNum}`)
-      .then((req) => {
-        return req.json();
-      })
-      .then((data) => {
+    async function fetchData() {
+      try {
+        const response = await fetch(`http://localhost:5000/post/page/${pageNum}`)
+        const data = await response.json();
         setPosts(data.post);
         setMaxPost(data.maxPost);
-      })
-      .catch((err) => {
-        console.error("데이터 받아오기 실패:", err)
-      })
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchData();
   }, [pageNum])
 
 
@@ -69,13 +85,13 @@ function PostPage({ userName }: Props) {
 
         <div className='header-wrapper'>
           <div className='header-left'>
-            
-            <button onClick={() => { nav('/write')}}>글쓰기</button>
+
+            <button onClick={() => { nav('/write') }}>글쓰기</button>
           </div>
           <h1>게시판</h1>
           <div className='search-wrapper'>
             <input type="text" />
-            <button type="submit" style={{width: "70px"}}>검색</button>
+            <button type="submit" style={{ width: "70px" }}>검색</button>
           </div>
         </div>
 
@@ -112,7 +128,7 @@ function PostPage({ userName }: Props) {
         </table>
         <div>
           <button onClick={() => { nav(`/post/page/${pageDown()}`) }}>왼쪽</button>
-          <span>{pageNum}/{Math.ceil(maxPost/10)}</span>
+          <span>{pageNum}/{Math.ceil(maxPost / 10)}</span>
           <button onClick={() => { nav(`/post/page/${pageUp()}`) }}>오른쪽</button>
         </div>
       </div>
