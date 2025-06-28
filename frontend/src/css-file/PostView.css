@@ -58,3 +58,20 @@ hr {
   color: rgb(39, 39, 39);
   display: flex;
 }
+
+.comment-form{
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+}
+
+.comment-form > input{
+  width: 80%;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+.comment-form > button{
+  width: 10%;
+}

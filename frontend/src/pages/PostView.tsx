@@ -85,6 +85,10 @@ function PostView() {
               {post.content}
             </div>
             <hr />
+            <form className='comment-form'>
+              <input type="text" placeholder='댓글을 작성하세요'/>
+              <button type="submit">작성</button>
+            </form>
             {commentDetail.map((comment) => {
               return (
                 <div className='postComment' key={comment.id}>
