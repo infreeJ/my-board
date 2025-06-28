@@ -46,23 +46,8 @@ function PostPage({ userName }: Props) {
   const [maxPost, setMaxPost] = useState(0);
 
 
-  // 페이지가 넘어가면 해당 페이지의 데이터 요청
-  // useEffect(() => {
-  //   fetch(`http://localhost:5000/post/page/${pageNum}`)
-  //     .then((req) => {
-  //       return req.json();
-  //     })
-  //     .then((data) => {
-  //       setPosts(data.post);
-  //       setMaxPost(data.maxPost);
-  //     })
-  //     .catch((err) => {
-  //       console.error("데이터 받아오기 실패:", err)
-  //     })
-  // }, [pageNum])
 
-
-  // try로 바꾸기
+  // 페이지 목록 가져오기
   useEffect(() => {
     async function fetchData() {
       try {

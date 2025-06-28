@@ -13,6 +13,7 @@ function LoginPage({userName, setUserName, setUserId} : Props) {
   const nav = useNavigate();
   const [password, setPassword] = useState("")
 
+  // 로그인
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {

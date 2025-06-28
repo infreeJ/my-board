@@ -8,7 +8,7 @@ function PostView() {
   let postId = Number(id);
 
 
-  // 게시글 데이터
+  // 게시글 데이터 가져오기
   const [postDetail, setPostDetail] = useState<postDetailType[]>([]);
 
   type postDetailType = {
@@ -22,20 +22,21 @@ function PostView() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:5000/post/${postId}`)
-      .then((req) => {
-        return req.json();
-      })
-      .then((data) => {
+    async function fetchData() {
+      try {
+        const response = await fetch(`http://localhost:5000/post/${postId}`)
+        const data = await response.json();
         setPostDetail(data);
-      })
-      .catch((err) => {
-        console.error("데이터 받아오기 실패:", err)
-      })
+      } catch(err) {
+        console.error(err);
+        
+      }
+    }
+    fetchData();
   }, [postId])
 
 
-  // 댓글 데이터
+  // 댓글 데이터 가져오기
   const [commentDetail, setCommentDetail] = useState<commentDetailType[]>([]);
 
   type commentDetailType = {
@@ -45,21 +46,6 @@ function PostView() {
     created_at: string
   };
 
-  // useEffect(() => {
-  //   fetch(`http://localhost:5000/post/${postId}/comments`)
-  //     .then((req) => {
-  //       return req.json();
-  //     })
-  //     .then((data) => {
-  //       setCommentDetail(data);
-  //     })
-  //     .catch((err) => {
-  //       console.error("데이터 받아오기 실패:", err)
-  //     })
-  // }, [postId])
-
-
-  // try로 바꾸기
   useEffect(() => {
     async function fetchData() {
       try {
