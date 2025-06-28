@@ -23,7 +23,7 @@ function App() {
         <Route path='/login' element={<LoginPage userName={userName} setUserName={setUserName} setUserId={setUserId}/>} />
         <Route path='/join' element={<JoinPage/>} />
         <Route path='/post/page/:page' element={<PostPage userName={userName}/>} />
-        <Route path='/post/:id' element={<PostView />} />
+        <Route path='/post/:id' element={<PostView userId={userId} />} />
         <Route path='/write' element={<WritePage userId={userId}/>} />
       </Routes>
     </>

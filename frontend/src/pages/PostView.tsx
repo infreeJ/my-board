@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import '../css-file/PostView.css'
 import { useParams } from 'react-router-dom';
 
-function PostView() {
+interface Props {
+  userId: number;
+}
+
+function PostView({ userId }: Props) {
 
   const { id } = useParams(); // Params 값 가져오기
   let postId = Number(id);
@@ -27,9 +31,9 @@ function PostView() {
         const response = await fetch(`http://localhost:5000/post/${postId}`)
         const data = await response.json();
         setPostDetail(data);
-      } catch(err) {
+      } catch (err) {
         console.error(err);
-        
+
       }
     }
     fetchData();
@@ -46,18 +50,49 @@ function PostView() {
     created_at: string
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(`http://localhost:5000/post/${postId}/comments`)
-        const data = await response.json();
-        setCommentDetail(data);
-      } catch(err) {
-        console.error(err);
-      }
+  // 댓글 작성 시 리렌더링하기 위해 따로 뺌
+  async function fetchComment() {
+    try {
+      const response = await fetch(`http://localhost:5000/post/${postId}/comments`)
+      const data = await response.json();
+      setCommentDetail(data);
+    } catch (err) {
+      console.error(err);
     }
-    fetchData();
+  }
+
+
+  useEffect(() => {
+    fetchComment();
   }, [postId])
+
+
+
+  // 댓글 작성
+  const [commentText, setCommentText] = useState("");
+
+  async function writeComment(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:5000/post/${postId}/writeComment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ commentText, postId, userId })
+      })
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert("작성 완료")
+        fetchComment();
+      } else {
+        alert("작성 실패")
+      }
+    } catch (err) {
+      console.error("서버 연결 실패" + err);
+    }
+  }
+
 
 
 
@@ -85,8 +120,8 @@ function PostView() {
               {post.content}
             </div>
             <hr />
-            <form className='comment-form'>
-              <input type="text" placeholder='댓글을 작성하세요'/>
+            <form className='comment-form' onSubmit={writeComment}>
+              <input type="text" placeholder='댓글을 작성하세요' value={commentText} onChange={(e) => { setCommentText(e.target.value) }} />
               <button type="submit">작성</button>
             </form>
             {commentDetail.map((comment) => {
