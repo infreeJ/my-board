@@ -1,3 +1,4 @@
+const { autoCommit } = require('oracledb');
 const { oracledb, dbConfig } = require('../db')
 
 const getPostsByPage = async (req, res) => {
@@ -25,7 +26,7 @@ const getPostsByPage = async (req, res) => {
         created_at: row[5],
       }
     })
-    res.json({post: post, maxPost: maxPost});
+    res.json({ post: post, maxPost: maxPost });
 
 
   } catch (err) {
@@ -105,4 +106,47 @@ const getComments = async (req, res) => {
 }
 
 
-module.exports = { getPostsByPage, getPost, getComments };
+const getSearchPost = async (req, res) => {
+  let connection;
+
+  try {
+    connection = await oracledb.getConnection(dbConfig)
+
+    const { searchText } = req.body;
+    const keyword = `%${searchText.replace(/\s/g, '')}%`; // 공백 제거하고 % 붙임
+    const nameKeyword = `%${searchText}%`; // 작성자 검색용
+
+    const result = await connection.execute(
+      `SELECT DISTINCT p.id, u.name, p.title, p.likes, p.views, p.created_at
+      FROM users u JOIN POSTS p ON p.user_id = u.id
+      WHERE REPLACE(p.title, ' ', '') LIKE :keyword OR u.name LIKE :keyword`,
+      { keyword },
+      [{autoCommit: true}])
+
+      const searchPage = 1;
+      const response = result.rows.slice(searchPage * 10 - 10, searchPage * 10)
+      const searchMaxPage = result.rows.length
+
+      const searchData = response.map((row) => {
+        return {
+          id: row[0],
+          name: row[1],
+          title: row[2],
+          likes: row[3],
+          views: row[4],
+          created_at: row[5]
+        }
+      })
+      res.json({searchData, searchPage, searchMaxPage})
+
+  } catch (err) {
+    console.error("DB 연결 또는 쿼리 에러:", err);
+    res.status(500).json({ error: 'DB 오류', message: err.message });
+  } finally {
+    if (connection) await connection.close();
+  }
+
+}
+
+
+module.exports = { getPostsByPage, getPost, getComments, getSearchPost };

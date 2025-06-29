@@ -90,7 +90,8 @@ span {
 
 .search-wrapper{
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  gap: 0;
 }
 
 .search-wrapper input{
@@ -99,11 +100,20 @@ span {
   outline: none;
   border: 1px solid rgb(173, 173, 173);
   border-right: none;
-  /* border-left: 1px solid black; */
   border-radius: 6px 0 0 6px;
 }
 
 .search-wrapper button{
   border-radius: 0 6px 6px 0;
   height: 34px;
+}
+
+.postPage-top{
+  display: flex;
+  justify-content: space-between;
+}
+
+.postPage-top > button{
+  width: 120px;
+  height: 50px;
 }

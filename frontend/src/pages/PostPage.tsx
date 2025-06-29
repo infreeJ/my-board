@@ -48,25 +48,64 @@ function PostPage({ userName }: Props) {
 
 
   // 페이지 목록 가져오기
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(`http://localhost:5000/post/page/${pageNum}`)
-        const data = await response.json();
-        setPosts(data.post);
-        setMaxPost(data.maxPost);
-      } catch (err) {
-        console.error(err);
-      }
+
+  async function fetchPost() {
+    try {
+      const response = await fetch(`http://localhost:5000/post/page/${pageNum}`)
+      const data = await response.json();
+      setPosts(data.post);
+      setMaxPost(data.maxPost);
+    } catch (err) {
+      console.error(err);
     }
-    fetchData();
+  }
+  useEffect(() => {
+
+    fetchPost();
   }, [pageNum])
+
+
+
+
+
+  // 검색 기능
+
+  const [searchText, setSearchText] = useState("");
+
+  async function searchPost(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:5000/searchPost', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ searchText })
+      })
+
+      const data = await response.json();
+
+      console.log("search 응답 결과:", data);
+
+      setPosts(data.searchData)
+      setMaxPost(data.searchMaxPage)
+      pageNum = 1;
+
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+
+
 
 
   return (
     <>
       <div className='postPage-wrapper'>
-        <p className='nickname'>반갑습니다! {userName}님</p>
+        <div className='postPage-top'>
+          <p className='nickname'>반갑습니다! {userName}님</p>
+          <button onClick={fetchPost}>전체 글 보기</button>
+        </div>
 
         <div className='header-wrapper'>
           <div className='header-left'>
@@ -74,10 +113,11 @@ function PostPage({ userName }: Props) {
             <button onClick={() => { nav('/write') }}>글쓰기</button>
           </div>
           <h1>게시판</h1>
-          <div className='search-wrapper'>
-            <input type="text" />
+          <form className='search-wrapper' onSubmit={searchPost}>
+            <input type="text" value={searchText} onChange={(e) => { setSearchText(e.target.value) }} />
             <button type="submit" style={{ width: "70px" }}>검색</button>
-          </div>
+          </form>
+
         </div>
 
         <table>
@@ -109,6 +149,7 @@ function PostPage({ userName }: Props) {
                 </tr>
               );
             })}
+
           </tbody>
         </table>
         <div>
