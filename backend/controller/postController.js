@@ -1,4 +1,4 @@
-const { autoCommit } = require('oracledb');
+
 const { oracledb, dbConfig } = require('../db')
 
 const getPostsByPage = async (req, res) => {
@@ -113,17 +113,19 @@ const getSearchPost = async (req, res) => {
     connection = await oracledb.getConnection(dbConfig)
 
     const { searchText } = req.body;
-    const keyword = `%${searchText.replace(/\s/g, '')}%`; // 공백 제거하고 % 붙임
-    const nameKeyword = `%${searchText}%`; // 작성자 검색용
+    const keyword = `%${searchText.replace(/\s/g, '')}%`;
 
     const result = await connection.execute(
       `SELECT DISTINCT p.id, u.name, p.title, p.likes, p.views, p.created_at
       FROM users u JOIN POSTS p ON p.user_id = u.id
       WHERE REPLACE(p.title, ' ', '') LIKE :keyword OR u.name LIKE :keyword`,
-      { keyword },
-      [{autoCommit: true}])
+      { keyword })
 
       const searchPage = 1;
+      // 아마 검색된 게시글이 10개 넘어가면 버그 발견될 듯.
+      // searchPage를 백엔드가 아닌 프론트엔드에서 pageNum으로 함께 관리해야 할 것 같다.
+      // 검색창에 검색버튼을 누르면 pageNum을 1로 만들면서 검색창 텍스트와 함께 백엔드로 전달하고
+      // 여기서는 searchPage 대신 pageNum을 사용해야 할듯
       const response = result.rows.slice(searchPage * 10 - 10, searchPage * 10)
       const searchMaxPage = result.rows.length
 
@@ -137,7 +139,7 @@ const getSearchPost = async (req, res) => {
           created_at: row[5]
         }
       })
-      res.json({searchData, searchPage, searchMaxPage})
+      res.json({searchData, searchMaxPage})
 
   } catch (err) {
     console.error("DB 연결 또는 쿼리 에러:", err);

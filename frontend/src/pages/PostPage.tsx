@@ -48,7 +48,6 @@ function PostPage({ userName }: Props) {
 
 
   // 페이지 목록 가져오기
-
   async function fetchPost() {
     try {
       const response = await fetch(`http://localhost:5000/post/page/${pageNum}`)
@@ -66,10 +65,7 @@ function PostPage({ userName }: Props) {
 
 
 
-
-
   // 검색 기능
-
   const [searchText, setSearchText] = useState("");
 
   async function searchPost(e: React.FormEvent<HTMLFormElement>) {
@@ -81,21 +77,14 @@ function PostPage({ userName }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ searchText })
       })
-
       const data = await response.json();
-
-      console.log("search 응답 결과:", data);
-
       setPosts(data.searchData)
       setMaxPost(data.searchMaxPage)
       pageNum = 1;
-
     } catch (err) {
       console.error(err);
     }
   }
-
-
 
 
 
